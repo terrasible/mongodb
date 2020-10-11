@@ -1,0 +1,35 @@
+repos:
+  - repo: https://github.com/gruntwork-io/pre-commit
+    rev: v0.1.9
+    hooks:
+      - id: gofmt
+      - id: golint
+  - repo: https://github.com/antonbabenko/pre-commit-terraform
+    rev: v1.31.0
+    hooks:
+      - id: terraform_fmt
+      - id: terraform_docs
+        args: ["-a", "--no-providers"]
+      - id: terraform_tflint
+      - id: terragrunt_fmt
+  
+  - repo: https://github.com/ansible/ansible-lint
+    rev: 9da220ae3a11c10c10ee43284ad6cad6d8ba52b7
+    hooks:
+      - id: ansible-lint
+        name: Ansible-lint
+        description: This hook runs ansible-lint.
+        entry: ansible-lint --force-color
+        language: python
+        # do not pass files to ansible-lint, see:
+        # https://github.com/ansible/ansible-lint/issues/611
+        pass_filenames: false
+        always_run: true
+  
+  - repo: https://github.com/adrienverge/yamllint.git
+    rev: v1.20.0
+    hooks:
+      - id: yamllint
+        files: \.(yaml|yml)$
+        types: [file, yaml]
+        entry: yamllint --strict -f parsable

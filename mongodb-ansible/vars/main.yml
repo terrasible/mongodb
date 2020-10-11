@@ -1,0 +1,7 @@
+---
+# vars file for Mongodb_Role
+bind: 0.0.0.0
+storage_path_debian: /opt/mongodb/data/
+storage_path_centos: /var/lib/mongo/
+debian_mongodb_version: "4.0"
+centos_mongodb_version: "4.2"

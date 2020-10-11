@@ -1,0 +1,44 @@
+---
+# tasks file for mongodebian
+- name: add MongoDB GPG key
+  apt_key:
+    url: https://www.mongodb.org/static/pgp/server-4.2.asc
+    state: present
+  when: debian_mongodb_version=='4.2'
+- name: add MongoDB GPG key
+  apt_key:
+    url: https://www.mongodb.org/static/pgp/server-4.0.asc
+    state: present
+  when: debian_mongodb_version=='4.0'
+
+- apt_repository:
+    repo: deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu {{ ansible_distribution_release }}/mongodb-org/4.2 multiverse
+    state: present
+    filename: mongodb-org-4.2.list
+  when: debian_mongodb_version=='4.2'
+- apt_repository:
+    repo: deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu {{ ansible_distribution_release }}/mongodb-org/4.0 multiverse
+    state: present
+    filename: mongodb-org-4.0.list
+  when: debian_mongodb_version=='4.0'
+
+- name: Update repositories cache and install "mongodb" package
+  apt: name=mongodb-org  state=present  update_cache=true
+
+- name: Mongodb datapath
+  file:
+    path: /opt/mongodb/data
+    state: directory
+    mode: "u=rwx,g=wrx,o=rwx"
+    recurse: yes
+
+- name: remove a file
+  file:
+    path: /etc/mongod.conf
+    state: absent
+- name: mongo conf copy
+  template:
+    src: mongodd.j2
+    dest: /etc/mongod.conf
+  notify:
+    - restart

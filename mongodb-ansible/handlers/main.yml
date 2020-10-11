@@ -1,0 +1,4 @@
+---
+# handlers file for Mongodb_Role
+- name: restart
+  service: name=mongod state=restarted daemon-reload=true

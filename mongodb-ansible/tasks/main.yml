@@ -1,0 +1,7 @@
+---
+# tasks file for Mongodb_Role
+
+- include_tasks: debian.yml
+  when: ansible_os_family == 'Debian'
+- include_tasks: centOS.yaml
+  when: ansible_os_family == 'RedHat'

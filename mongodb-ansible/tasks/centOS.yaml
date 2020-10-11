@@ -1,0 +1,24 @@
+---
+# tasks file for mongocentos
+- name: Copy mongodb repository 4.2
+  copy: src=files/mongodb-org-4.2.repo  dest=/etc/yum.repos.d/mongodb-org-4.2.repo
+  when: centos_mongodb_version=='4.2'
+- name: Copy mongodb repository 4.0
+  copy: src=files/mongodb-org-4.0.repo  dest=/etc/yum.repos.d/mongodb-org-4.0.repo
+  when: centos_mongodb_version=='4.0'
+- name: Install mongodb and upgrading all
+  yum:
+    name: ['mongodb-org', 'python36']
+    update_cache: yes
+    state: present
+
+- name: remove mongod default a file
+  file:
+    path: /etc/mongod.conf
+    state: absent
+- name: mongod conf copy
+  template:
+    src: mongodc.j2
+    dest: /etc/mongod.conf
+  notify:
+    - restart
