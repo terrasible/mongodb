@@ -1,4 +1,4 @@
-![image](https://github.com/bibek469/mongodb/assets/47882764/371e642c-3a10-4780-98e3-7c52d348dc3e)### Ansible Playbook for Setting Up MongoDB Cluster (Debian & Redhat)
+### Ansible Playbook for Setting Up MongoDB Cluster (Debian & Redhat)
 
 This Ansible playbook automates the setup of a MongoDB cluster on both Debian and Redhat family distributions. It provides flexibility in configuring the storage path and allows modifications to the MongoDB configuration based on specific requirements.
 
